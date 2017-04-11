@@ -168,14 +168,7 @@ public class Main
     streamSupplier.get().anyMatch( element -> true );
     streamSupplier.get().noneMatch( element -> true );
         
-    System.out.println( "---------------------ADVANCED OPERATIONS--------------------" );
-    
-    
-    
-    
-    
-    
-    
+       
     }
     
 }
