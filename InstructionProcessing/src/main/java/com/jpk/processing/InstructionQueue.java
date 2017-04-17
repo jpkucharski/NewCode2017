@@ -15,7 +15,7 @@ public class InstructionQueue
     public void enqueue( InstructionMessage message )
     {
         // Adds a message to the queue
-
+        this.put( message );
     }
 
 
@@ -24,7 +24,7 @@ public class InstructionQueue
         // Removes the highestpriority
         // message from the queue
         // and returns it
-        return null;
+        return this.poll();
     }
 
 
@@ -33,7 +33,7 @@ public class InstructionQueue
         // Returns the highestpriority
         // message from the queue,
         // without returning it
-        return null;
+        return this.peek();
     }
 
 
@@ -41,6 +41,6 @@ public class InstructionQueue
     {
         // Returns the number of messages
         // currently on the queue
-        return 0;
+        return this.size();
     }
 }

@@ -2,8 +2,11 @@ package com.jpk.validation;
 
 import static org.junit.Assert.*;
 
+import java.text.ParseException;
+
 import org.junit.Test;
 
+import com.jpk.customExceptions.InvalidMessageException;
 import com.jpk.validation.MessageValidator;
 
 public class MessageValidatorTest
@@ -32,7 +35,7 @@ public class MessageValidatorTest
 
 
     @Test
-    public void chackingIfMessageValidationForMesageQuantityIsCorrect_ShouldReturnTrueIfQuantityIsBiggerThen0()
+    public void chackingIfMessageValidationForMesageQuantityIsCorrect_ShouldReturnTrueIfQuantityIsBiggerThen0() throws InvalidMessageException
     {
 
         MessageValidator messageValidator = new MessageValidator();
@@ -52,7 +55,7 @@ public class MessageValidatorTest
     }
 
     @Test
-    public void chackingIfMessageValidationForMesageTimestampIsCorrect_ShouldReturnTrueIfTimePaternIsCorrect()
+    public void chackingIfMessageValidationForMesageTimestampIsCorrect_ShouldReturnTrueIfTimePaternIsCorrect() throws ParseException 
     {
         MessageValidator messageValidator = new MessageValidator();
         assertTrue( messageValidator.chackingMessageCorrectTimestamp( MESSAGE.split( " " )[4] ) );

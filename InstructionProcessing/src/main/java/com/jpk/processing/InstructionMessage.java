@@ -6,12 +6,12 @@ import java.sql.Timestamp;
 public class InstructionMessage
 {
     // <InstructionType> <ProductCode> <Quantity> <UOM> <Timestamp>
-    private String instructionType, productCode, uom;
-    private int quantity;
+    private String instructionType, productCode;
+    private int quantity, uom;
     private Timestamp timestamp;
 
 
-    public InstructionMessage( String instructionType, String productCode, int quantit, String uom, Timestamp timestamp )
+    public InstructionMessage( String instructionType, String productCode, int quantit, int uom, Timestamp timestamp )
     {
         this.instructionType = instructionType;
         this.productCode = productCode;
@@ -33,7 +33,7 @@ public class InstructionMessage
     }
 
 
-    public String getUom()
+    public int getUom()
     {
         return uom;
     }

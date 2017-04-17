@@ -3,27 +3,33 @@ package com.jpk.validation;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.IllegalFormatException;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.jpk.customExceptions.InvalidMessageException;
 
 
 public class MessageValidator
 {
-    
-    public boolean isValid(String message)
-        {
+
+    public boolean isValid( String message ) throws InvalidMessageException 
+    {
         String[] messageParts = message.split( " " );
-            boolean trigger = false;
-            if( messageCorrectType( messageParts[0]) | 
-                messageCorrectProductCode( messageParts[1] ) |
-                messageCorrectQuantity( messageParts[2] ) |
-                messageCorrectUom( messageParts[3] ) |
-                chackingMessageCorrectTimestamp( messageParts[4] ))
+        boolean trigger = false;
+        try
+        {
+            if( messageCorrectType( messageParts[0] ) | messageCorrectProductCode( messageParts[1] ) |
+                messageCorrectQuantity( messageParts[2] ) | messageCorrectUom( messageParts[3] ) |
+                chackingMessageCorrectTimestamp( messageParts[4] ) )
             {
                 trigger = true;
             }
-           
-            return trigger;
+        }
+        catch( ParseException | IllegalFormatException e )
+        {
+            throw new InvalidMessageException( "Invalid Message from Message Validator" );
+        }
+        return trigger;
     }
 
 
@@ -35,7 +41,7 @@ public class MessageValidator
     }
 
 
-    @VisibleForTesting 
+    @VisibleForTesting
     protected boolean messageCorrectProductCode( String messagePart )
     {
         final String regex = "[A-Z]{2}\\d{2}";
@@ -47,7 +53,11 @@ public class MessageValidator
     @VisibleForTesting
     protected boolean messageCorrectQuantity( String messagePart )
     {
-        return Integer.parseInt( messagePart ) > 0;
+        boolean isParsable;
+
+        isParsable = Integer.parseInt( messagePart ) > 0;
+
+        return isParsable;
     }
 
 
@@ -59,23 +69,20 @@ public class MessageValidator
 
 
     @VisibleForTesting
-    protected boolean chackingMessageCorrectTimestamp( String messagePart )
+    protected boolean chackingMessageCorrectTimestamp( String messagePart ) throws ParseException
     {
+
         Date date = null;
         final String format = "yyyyMMdd'T'HH:mm:ss.SSS'Z'";
-       
-        try
+        SimpleDateFormat sdf = new SimpleDateFormat( format );
+
+        date = sdf.parse( messagePart );
+
+        if( !messagePart.equals( sdf.format( date ) ) )
         {
-            SimpleDateFormat sdf = new SimpleDateFormat( format );
-            date = sdf.parse( messagePart );
-            if (!messagePart.equals(sdf.format(date))) {
-                date = null;
-            }
+            date = null;
         }
-        catch( ParseException e )
-        {
-            e.printStackTrace();
-        }
+
         return date != null;
     }
 }
