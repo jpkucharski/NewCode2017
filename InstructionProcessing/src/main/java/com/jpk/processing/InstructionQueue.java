@@ -15,6 +15,8 @@ public class InstructionQueue
     public void enqueue( InstructionMessage message )
     {
         // Adds a message to the queue
+        System.out.println( "Message from queue Object: " + message );
+        System.out.println( message.getInstructionType() );
         this.put( message );
     }
 

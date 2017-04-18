@@ -45,7 +45,7 @@ public class Receiver
         
         String[] messageParts = message.split( " " );
         
-        final String timeStampFormat = "yyyyMMdd'T'HH:mm:ss.SSS'Z'";
+        
         
         
         
@@ -53,19 +53,17 @@ public class Receiver
         String productCode = messageParts[1];
         int quantit = Integer.parseInt( messageParts[2] );
         int uom = Integer.parseInt( messageParts[3] );
-        SimpleDateFormat sdf = new SimpleDateFormat( timeStampFormat );
-        Timestamp timestamp = null;
+//        SimpleDateFormat sdf = new SimpleDateFormat( "yyyyMMdd'T'HH:mm:ss.SSS'Z'" );
+//        Date date = sdf.parse( messageParts[4] );
+        Timestamp timestamp= null;
+        try{
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd'T'HH:mm:ss.SSS'Z'");
+            Date parsedDate = dateFormat.parse(messageParts[4]);
+            timestamp = new java.sql.Timestamp(parsedDate.getTime());
+        }catch(Exception e){//this generic but you can control another types of exception
        
-            try
-            {
-                Date date = sdf.parse( messageParts[4] );
-            }
-            catch( ParseException e )
-            {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-//            timestamp = new Timestamp( date.getTime());
+        }
+       
         
         
         instructionMessage = new InstructionMessage( instructionType, productCode, quantit, uom, timestamp );
