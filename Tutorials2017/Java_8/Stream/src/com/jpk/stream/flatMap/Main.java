@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
+import javax.print.attribute.standard.MediaSize.Other;
+
 
 class Outher {
     Nested nested;
@@ -72,22 +74,29 @@ public class Main
          .forEach( b -> System.out.println( b.name) );                                                         //forEach element of stream sysout Element.variable from object
      
      System.out.println( "----------------------------------------------------------------" );
-             
-     Outher other = new Outher();                                                                                //Create instance Outher
-     other.nested = new Nested();
-     other.nested.inner = new Inner();
-     other.nested.inner.foo = "foo";
      
-     if(other != null && other.nested != null && other.nested.inner != null){                                        
-         System.out.println( other.nested.inner.foo );
+     Outher outher = new Outher();
+     outher.nested.inner.foo = "foo";
+     
+     
+     
+     
+     
+     
+//     outher.nested = new Nested();                                                                            
+//     outher.nested.inner = new Inner();
+//     outher.nested.inner.foo = "foo";
+//     
+     if(outher != null && outher.nested != null && outher.nested.inner != null){                                        
+         System.out.println( outher.nested.inner.foo );
      }
      
      System.out.println( "----------------------------------------------------------------" );
      
      Optional.of( new Outher())
-     .flatMap(o -> Optional.ofNullable(o.nested))
-     .flatMap(n -> Optional.ofNullable(n.inner))
-     .flatMap(i -> Optional.ofNullable(i.foo))
+     .flatMap(outherElement -> Optional.ofNullable(outherElement.nested))
+     .flatMap(nestedElement -> Optional.ofNullable(nestedElement.inner))
+     .flatMap(innerElement -> Optional.ofNullable(innerElement.foo))
      .ifPresent(System.out::println);
      
      System.out.println( "----------------------------------------------------------------" );
