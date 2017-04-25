@@ -32,5 +32,10 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="U:/TEMP Google Download/guava-21.0.jar"/>
+	<classpathentry kind="lib" path="U:/TEMP Google Download/junit-4.12.jar"/>
+	<classpathentry kind="lib" path="U:/TEMP Google Download/maven-clean-plugin-2.5.jar"/>
+	<classpathentry kind="lib" path="U:/TEMP Google Download/maven-compiler-plugin-3.1.jar"/>
+	<classpathentry kind="lib" path="U:/TEMP Google Download/mockito-all-1.10.19.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
