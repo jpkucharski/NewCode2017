@@ -7,12 +7,17 @@ public class PersonsComparator
 {
 
     @Override
-    public int compare( Person o1, Person o2 )
+    public int compare( Person person1, Person person2 )
     {
-        if (getVowelCount(x) < getVowelCount(y)) {
-            return -1;
+        if(person1.getName().charAt( 0 ) == "C".charAt( 0 ) &&  person2.getName().charAt( 0 ) == "D".charAt( 0 )  ){
+            return 0;
+        }
+        if(person1.getName().charAt( 0 ) == "D".charAt( 0 ) &&  person2.getName().charAt( 0 ) == "C".charAt( 0 )  ){
+            return 0;
+        }
+        if(person1.getName() != null && person2.getName() != null){
+            return person1.getName().compareTo(person2.getName());
         }
         return 0;
     }
-
 }

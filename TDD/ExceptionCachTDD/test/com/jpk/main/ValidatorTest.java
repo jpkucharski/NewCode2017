@@ -4,9 +4,14 @@ import static org.junit.Assert.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+
+import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
 import com.jpk.exceptions.ValidationException;
 import com.jpk.interfaces.validable;
 
@@ -20,6 +25,9 @@ public class ValidatorTest
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
     private Validator validator;
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
 
     @Before
@@ -51,6 +59,16 @@ public class ValidatorTest
 
 
     @Test
+    public void testValidationExceptionMessage_ShouldThrowException() throws ValidationException
+    {
+        thrown.expect( ValidationException.class );
+        thrown.expectMessage( "Error Message" );
+        validator.validation( INVALID_STRING );
+        thrown.expectMessage( Matchers.containsString( "Error Message" ) );
+    }
+
+
+    @Test
     public void testValidationMethod_ShouldReturnOutPrintfIsValid() throws ValidationException
     {
         validator.validation( VALID_STRING );
@@ -63,7 +81,6 @@ public class ValidatorTest
     {
         validable valInterface = new Validator();
         valInterface.validation( INVALID_STRING );
-
     }
 
 }
