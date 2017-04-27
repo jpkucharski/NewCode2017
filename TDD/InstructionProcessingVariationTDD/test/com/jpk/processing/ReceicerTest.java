@@ -60,6 +60,13 @@ public class ReceicerTest
         assertEquals( LENGTH_OF_QUEUE_WITH_ONE_MESSAGE, reciver.getInstructionQueue().getPriorityQueue().size());
     }
     
+    
+    @Test
+    public void testingReceiveMethodSendingMessag_ShouldReturnSizeOfPriorityQueueEquals1(){
+        sendSimpleMessage();
+        assertEquals( LENGTH_OF_QUEUE_WITH_ONE_MESSAGE, reciver.getInstructionQueue().count());
+    }
+    
 
     private void sendSimpleMessage()
     {

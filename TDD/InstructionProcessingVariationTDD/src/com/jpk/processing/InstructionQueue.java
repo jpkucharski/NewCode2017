@@ -22,21 +22,28 @@ public class InstructionQueue
         priorityQueue.add( message );
     }
 
-    public String dequeue(){
+
+    public String dequeue()
+    {
         return priorityQueue.poll();
     }
-    
 
-    public PriorityQueue<String> getPriorityQueue()
-    {
-        return priorityQueue;
-    }
 
     public String peek()
     {
         return priorityQueue.peek();
     }
 
-    
+
+    public int count()
+    {
+        return priorityQueue.size();
+    }
+
+
+    public PriorityQueue<String> getPriorityQueue()
+    {
+        return priorityQueue;
+    }
 
 }
