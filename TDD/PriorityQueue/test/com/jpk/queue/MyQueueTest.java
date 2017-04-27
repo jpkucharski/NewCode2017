@@ -13,7 +13,7 @@ public class MyQueueTest
 {
     private static final String NAME_A = "A_PERSON_NAME";
     private static final String NAME_B = "B_PERSON_NAME";
-    private static final String NAME_C = "C_PERSON_NAME";
+    private static final String NAME_C = "Caaaa_PERSON_NAME";
     private static final String NAME_D = "D_PERSON_NAME";
     private static final int VALUES_ARE_THE_SAME = 0;
     private static final int SECOUND_IS_GREATER_THEN_FIRST = -1;
@@ -107,7 +107,7 @@ public class MyQueueTest
 
 
     @Test
-    public void testingQueueComparatorPuttingTherePersonObjectsInNonAlphabeticalOrderShouldReturnPerdonA()
+    public void testingQueueComparatorPuttingTherePersonObjectsInNonAlphabeticalOrder_ShouldReturnPerdonA()
     {
         queue.insert( person_d );
         queue.insert( person_c );
@@ -117,4 +117,21 @@ public class MyQueueTest
         assertEquals( person_b.getName(), queue.poll().getName() );
         assertEquals( person_d.getName(), queue.poll().getName() );
     }
+    
+    @Test
+    public void testingQueueComparatorPuttingTherePersonObjectsDDCOrder_ShouldDisplayListFromTheQueue ()
+    {
+        queue.insert( person_d );
+        queue.insert( person_d );
+        queue.insert( person_d );
+        queue.insert( person_c );
+        for (int i = 0 ; i <= queue.size() ; i++){
+            System.out.println( queue.poll().getName() );
+            
+        }
+    
+    }
+    
+    
+    
 }
