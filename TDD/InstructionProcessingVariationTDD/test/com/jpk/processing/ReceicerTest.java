@@ -67,6 +67,14 @@ public class ReceicerTest
         assertEquals( LENGTH_OF_QUEUE_WITH_ONE_MESSAGE, reciver.getInstructionQueue().count());
     }
     
+    @Test
+    public void testingReceiveMethodSendingMessag_ShouldCreatedInstructionMessageObjectFromTheMessageString(){
+        sendSimpleMessage();
+        assertNotNull( reciver.getInstructionMessage() );
+    }
+    
+    
+    
 
     private void sendSimpleMessage()
     {

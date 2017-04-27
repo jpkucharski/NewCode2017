@@ -1,5 +1,6 @@
 package com.jpk.processing;
 
+import com.jpk.entitys.InstructionMessage;
 import com.jpk.interfaces.MessageReceiver;
 
 
@@ -8,6 +9,7 @@ public class Receiver
 {
 
     private InstructionQueue instructionQueue;
+    private InstructionMessage instructionMessage;
 
 
     public Receiver( InstructionQueue instructionQueue )
@@ -20,7 +22,7 @@ public class Receiver
     public void receive( String message )
     {
         instructionQueue.enqueue( message );
-
+        this.instructionMessage = new InstructionMessage();
     }
 
 
@@ -29,4 +31,13 @@ public class Receiver
         return instructionQueue;
     }
 
+
+    public InstructionMessage getInstructionMessage()
+    {
+        return instructionMessage;
+    }
+
+    
+    
+    
 }
