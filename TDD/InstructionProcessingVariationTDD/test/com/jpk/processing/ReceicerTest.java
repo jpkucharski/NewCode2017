@@ -74,6 +74,11 @@ public class ReceicerTest
     }
     
     
+    @Test
+    public void testingReceiveMethodSendingMessag_ShouldCreatedMessageValidatorObject(){
+        sendSimpleMessage();
+        assertNotNull(reciver.getMessageValidator());
+    }
     
 
     private void sendSimpleMessage()

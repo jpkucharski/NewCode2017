@@ -2,6 +2,7 @@ package com.jpk.processing;
 
 import com.jpk.entitys.InstructionMessage;
 import com.jpk.interfaces.MessageReceiver;
+import com.jpk.validator.MessageValidator;
 
 
 public class Receiver
@@ -10,10 +11,12 @@ public class Receiver
 
     private InstructionQueue instructionQueue;
     private InstructionMessage instructionMessage;
+    private MessageValidator messageValidator;
 
 
     public Receiver( InstructionQueue instructionQueue )
     {
+        this.messageValidator = new MessageValidator();
         this.instructionQueue = instructionQueue;
     }
 
@@ -21,8 +24,8 @@ public class Receiver
     @Override
     public void receive( String message )
     {
-        instructionQueue.enqueue( message );
         this.instructionMessage = new InstructionMessage();
+        instructionQueue.enqueue( message );
     }
 
 
@@ -37,7 +40,10 @@ public class Receiver
         return instructionMessage;
     }
 
-    
-    
-    
+
+    public MessageValidator getMessageValidator()
+    {
+        return messageValidator;
+    }
+
 }
