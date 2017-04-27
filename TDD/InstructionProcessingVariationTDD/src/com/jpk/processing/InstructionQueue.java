@@ -22,6 +22,10 @@ public class InstructionQueue
         priorityQueue.add( message );
     }
 
+    public String dequeue(){
+        return priorityQueue.poll();
+    }
+    
 
     public PriorityQueue<String> getPriorityQueue()
     {

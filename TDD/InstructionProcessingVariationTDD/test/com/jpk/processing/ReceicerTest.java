@@ -5,11 +5,12 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+
 public class ReceicerTest
 {
 
     private Receiver reciver;
-    
+
     private static final String EXAMPLE_OF_MESSAGE = "A MZ89 5678 50 20150305T10:04:56.012Z";
 
 
@@ -27,23 +28,34 @@ public class ReceicerTest
         assertNotNull( reciver.getInstructionQueue() );
     }
 
+
     @Test
     public void testingMethodReceiveSendingMessage_ShouldReturnNewPriorityQueueObject()
     {
         sendSimpleMessage();
         assertNotNull( reciver.getInstructionQueue().getPriorityQueue() );
     }
-    
+
+
     @Test
-    public void testingReceiveMethodSendingMessage_ShouldAddMessageIntoPriorityQueue(){
+    public void testingReceiveMethodSendingMessage_ShouldAddMessageIntoPriorityQueue()
+    {
         sendSimpleMessage();
-        assertEquals( EXAMPLE_OF_MESSAGE, reciver.getInstructionQueue().getPriorityQueue().peek());
+        assertEquals( EXAMPLE_OF_MESSAGE, reciver.getInstructionQueue().getPriorityQueue().peek() );
     }
-    
-    private void sendSimpleMessage(){
+
+
+    @Test
+    public void testingReceiveMethodSendingMessag_ShouldReceiveMessageFromPriorityQueue()
+    {
+        sendSimpleMessage();
+        assertEquals( EXAMPLE_OF_MESSAGE, reciver.getInstructionQueue().dequeue() );
+    }
+
+
+    private void sendSimpleMessage()
+    {
         reciver.receive( EXAMPLE_OF_MESSAGE );
     }
-    
-    
 
 }
