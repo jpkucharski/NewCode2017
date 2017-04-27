@@ -80,6 +80,13 @@ public class ReceicerTest
         assertNotNull(reciver.getMessageValidator());
     }
     
+    @Test
+    public void testingReceiveMethodSendingMessagWithFalseValidator_ShouldReturnEmptyQueue(){
+        sendSimpleMessage();
+        assertEquals( LENGTH_OF_QUEUE_WITH_ONE_MESSAGE, reciver.getInstructionQueue().count() );
+        
+    }
+    
 
     private void sendSimpleMessage()
     {
