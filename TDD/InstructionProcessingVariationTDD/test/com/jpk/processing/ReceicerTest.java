@@ -9,6 +9,8 @@ public class ReceicerTest
 {
 
     private Receiver reciver;
+    
+    private static final String EXAMPLE_OF_MESSAGE = "A MZ89 5678 50 20150305T10:04:56.012Z";
 
 
     @Before
@@ -18,24 +20,30 @@ public class ReceicerTest
     }
 
 
-    private static final String EXAMPLE_OF_MESSAGE = "A MZ89 5678 50 20150305T10:04:56.012Z";
-
-
     @Test
     public void testingSendingMessageToReceiver_ShouldCreateInstructionQueue()
     {
-        reciver.receive( EXAMPLE_OF_MESSAGE );
+        sendSimpleMessage();
         assertNotNull( reciver.getInstructionQueue() );
     }
-
 
     @Test
     public void testingMethodReceiveSendingMessage_ShouldReturnNewPriorityQueueObject()
     {
-
-        reciver.receive( EXAMPLE_OF_MESSAGE );
+        sendSimpleMessage();
         assertNotNull( reciver.getInstructionQueue().getPriorityQueue() );
-
     }
+    
+    @Test
+    public void testingReceiveMethodSendingMessage_ShouldAddMessageIntoPriorityQueue(){
+        sendSimpleMessage();
+        assertEquals( EXAMPLE_OF_MESSAGE, reciver.getInstructionQueue().getPriorityQueue().peek());
+    }
+    
+    private void sendSimpleMessage(){
+        reciver.receive( EXAMPLE_OF_MESSAGE );
+    }
+    
+    
 
 }

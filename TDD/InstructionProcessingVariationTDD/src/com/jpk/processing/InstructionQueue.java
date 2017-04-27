@@ -19,7 +19,7 @@ public class InstructionQueue
 
     public void enqueue( String message )
     {
-
+        priorityQueue.add( message );
     }
 
 
