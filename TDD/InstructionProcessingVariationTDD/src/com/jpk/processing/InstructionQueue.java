@@ -32,4 +32,11 @@ public class InstructionQueue
         return priorityQueue;
     }
 
+    public String peek()
+    {
+        return priorityQueue.peek();
+    }
+
+    
+
 }

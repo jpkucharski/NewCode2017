@@ -12,6 +12,7 @@ public class ReceicerTest
     private Receiver reciver;
 
     private static final String EXAMPLE_OF_MESSAGE = "A MZ89 5678 50 20150305T10:04:56.012Z";
+    private static final int LENGTH_OF_QUEUE_WITH_ONE_MESSAGE = 1;
 
 
     @Before
@@ -52,6 +53,13 @@ public class ReceicerTest
         assertEquals( EXAMPLE_OF_MESSAGE, reciver.getInstructionQueue().dequeue() );
     }
 
+    @Test
+    public void testingReceiveMethodSendingMessag_ShouldReturnMessageFromQueueWithoutRemovingItFromQueue(){
+        sendSimpleMessage();
+        assertEquals( EXAMPLE_OF_MESSAGE, reciver.getInstructionQueue().peek());
+        assertEquals( LENGTH_OF_QUEUE_WITH_ONE_MESSAGE, reciver.getInstructionQueue().getPriorityQueue().size());
+    }
+    
 
     private void sendSimpleMessage()
     {
