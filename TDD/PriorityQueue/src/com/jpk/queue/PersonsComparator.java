@@ -3,6 +3,25 @@ package com.jpk.queue;
 import java.util.Comparator;
 
 
+
+enum MyEnum
+{
+    A( 1 ), B( 2 ), C( 3 ), D( 3 );
+
+    int intValue;
+
+
+    MyEnum( int i )
+    {
+        this.intValue = i;
+    }
+    
+    public int getIntValye() {
+        return intValue;
+    }
+    
+}
+
 public class PersonsComparator
     implements Comparator<Person>
 {
@@ -12,25 +31,11 @@ public class PersonsComparator
     @Override
     public int compare( Person person1, Person person2 )
     {
-        if( getFirstLetterOfName( person1 ) == 'C' && getFirstLetterOfName( person2 ) == 'D' )
-        {
-            return 0;
-        }
-        if( getFirstLetterOfName( person1 ) == 'D' && getFirstLetterOfName( person2 ) == 'C' )
-        {
-            return 0;
-        }
-        if( person1.getName() != null && person2.getName() != null )
-        {
-            return person1.getName().compareTo( person2.getName() );
-        }
-        return 0;
+            return intValueForComparator( person1 ). compareTo(intValueForComparator( person2 ));
     }
 
-
-    private char getFirstLetterOfName( Person person )
-    {
-        return person.getName().charAt( POSITION_OF_FIRST_LETTER );
+    
+    private String intValueForComparator(Person person){
+        return  Integer.toString( MyEnum.valueOf( String.valueOf( person.getName().charAt( POSITION_OF_FIRST_LETTER )) ).getIntValye());
     }
-
 }
