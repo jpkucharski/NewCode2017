@@ -4,6 +4,8 @@ import com.jpk.entitys.InstructionMessage;
 import com.jpk.interfaces.MessageReceiver;
 import com.jpk.validator.MessageValidator;
 
+import comjpk.exceptions.ValidationException;
+
 
 public class Receiver
     implements MessageReceiver
@@ -22,7 +24,7 @@ public class Receiver
 
 
     @Override
-    public void receive( String message )
+    public void receive( String message ) throws ValidationException
     {
         if( messageValidator.isValid( message ) )
         {

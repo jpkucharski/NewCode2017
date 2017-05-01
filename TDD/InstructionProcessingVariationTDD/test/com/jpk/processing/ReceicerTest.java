@@ -7,6 +7,8 @@ import org.junit.Test;
 
 import com.jpk.entitys.InstructionMessage;
 
+import comjpk.exceptions.ValidationException;
+
 
 public class ReceicerTest
 {
@@ -29,7 +31,7 @@ public class ReceicerTest
 
 
     @Test
-    public void testingSendingMessageToReceiver_ShouldCreateInstructionQueue()
+    public void testingSendingMessageToReceiver_ShouldCreateInstructionQueue() throws ValidationException
     {
         sendSimpleMessage( EXAMPLE_OF_MESSAGE );
         assertNotNull( reciver.getInstructionQueue() );
@@ -37,7 +39,7 @@ public class ReceicerTest
 
 
     @Test
-    public void testingMethodReceiveSendingMessage_ShouldReturnNewPriorityQueueObject()
+    public void testingMethodReceiveSendingMessage_ShouldReturnNewPriorityQueueObject() throws ValidationException
     {
         sendSimpleMessage( EXAMPLE_OF_MESSAGE );
         assertNotNull( reciver.getInstructionQueue().getPriorityQueue() );
@@ -45,7 +47,7 @@ public class ReceicerTest
 
 
     @Test
-    public void testingReceiveMethodSendingMessage_ShouldAddMessageIntoPriorityQueue()
+    public void testingReceiveMethodSendingMessage_ShouldAddMessageIntoPriorityQueue() throws ValidationException
     {
         sendSimpleMessage( EXAMPLE_OF_MESSAGE );
         assertEquals( EXAMPLE_OF_MESSAGE, reciver.getInstructionQueue().getPriorityQueue().peek().getMessage() );
@@ -53,7 +55,7 @@ public class ReceicerTest
 
 
     @Test
-    public void testingReceiveMethodSendingMessag_ShouldReceiveMessageFromPriorityQueue()
+    public void testingReceiveMethodSendingMessage_ShouldReceiveMessageFromPriorityQueue() throws ValidationException
     {
         sendSimpleMessage( EXAMPLE_OF_MESSAGE );
         assertEquals( EXAMPLE_OF_MESSAGE, reciver.getInstructionQueue().dequeue().getMessage() );
@@ -61,7 +63,7 @@ public class ReceicerTest
 
 
     @Test
-    public void testingReceiveMethodSendingMessag_ShouldReturnMessageFromQueueWithoutRemovingItFromQueue()
+    public void testingReceiveMethodSendingMessage_ShouldReturnMessageFromQueueWithoutRemovingItFromQueue() throws ValidationException
     {
         sendSimpleMessage( EXAMPLE_OF_MESSAGE );
         assertEquals( EXAMPLE_OF_MESSAGE, reciver.getInstructionQueue().peek().getMessage() );
@@ -70,7 +72,7 @@ public class ReceicerTest
 
 
     @Test
-    public void testingReceiveMethodSendingMessag_ShouldReturnSizeOfPriorityQueueEquals1()
+    public void testingReceiveMethodSendingMessage_ShouldReturnSizeOfPriorityQueueEquals1() throws ValidationException
     {
         sendSimpleMessage( EXAMPLE_OF_MESSAGE );
         assertEquals( LENGTH_OF_QUEUE_WITH_ONE_MESSAGE, reciver.getInstructionQueue().count() );
@@ -78,7 +80,7 @@ public class ReceicerTest
 
 
     @Test
-    public void testingReceiveMethodSendingMessag_ShouldCreatedInstructionMessageObjectFromTheMessageString()
+    public void testingReceiveMethodSendingMessage_ShouldCreatedInstructionMessageObjectFromTheMessageString() throws ValidationException
     {
         sendSimpleMessage( EXAMPLE_OF_MESSAGE );
         assertNotNull( reciver.getInstructionMessage() );
@@ -86,7 +88,7 @@ public class ReceicerTest
 
 
     @Test
-    public void testingReceiveMethodSendingMessag_ShouldCreatedMessageValidatorObject()
+    public void testingReceiveMethodSendingMessage_ShouldCreatedMessageValidatorObject() throws ValidationException
     {
         sendSimpleMessage( EXAMPLE_OF_MESSAGE );
         assertNotNull( reciver.getMessageValidator() );
@@ -94,7 +96,7 @@ public class ReceicerTest
 
 
     @Test
-    public void testingReceiveMethodSendingMessagWithTrueValidator_ShouldReturnQueueWithOneMessage()
+    public void testingReceiveMethodSendingMessageWithTrueValidator_ShouldReturnQueueWithOneMessage() throws ValidationException
     {
         sendSimpleMessage( EXAMPLE_OF_MESSAGE );
         assertEquals( LENGTH_OF_QUEUE_WITH_ONE_MESSAGE, reciver.getInstructionQueue().count() );
@@ -102,22 +104,29 @@ public class ReceicerTest
 
 
     @Test
-    public void testingReceiveMethodSendingMessagWithTrueValidator_ShouldCreateInstructionMessageObject()
+    public void testingReceiveMethodSendingMessageWithTrueValidator_ShouldCreateInstructionMessageObject() throws ValidationException
     {
         sendSimpleMessage( EXAMPLE_OF_MESSAGE );
         assertEquals( simpleInstructionMessageObject.getClass(), reciver.getInstructionQueue().peek().getClass() );
     }
 
 
-    @Test
-    public void testingReceiveMethodSendingMessagWithTrueValidator_ShouldValidateFirstSymbolOfMessageInstructionTypeAndNotAddItToTheQueue()
+    @Test( expected = ValidationException.class )
+    public void testingReceiveMethodSendingInvalidMessage_ShouldValidateFirstSymbolOfMessageInstructionTypeAndNotAddItToTheQueue() throws ValidationException
     {
         sendSimpleMessage( EXAMPLE_OF_INVALID_MESSAGE );
         assertEquals( LENGTH_OF_EMPTY_QUEUE, reciver.getInstructionQueue().count() );
     }
 
 
-    private void sendSimpleMessage( String message )
+    @Test( expected = ValidationException.class )
+    public void testingReceiveMethodSendingInvalidMessage_ShouldThrowException() throws ValidationException
+    {
+        sendSimpleMessage( EXAMPLE_OF_INVALID_MESSAGE );
+    }
+
+
+    private void sendSimpleMessage( String message ) throws ValidationException
     {
         reciver.receive( message );
     }

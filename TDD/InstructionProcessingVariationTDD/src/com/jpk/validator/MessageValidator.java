@@ -1,5 +1,7 @@
 package com.jpk.validator;
 
+import comjpk.exceptions.ValidationException;
+
 public class MessageValidator
 {
     private static final int INSTRICTION_TYPE = 0;
@@ -7,10 +9,19 @@ public class MessageValidator
     private static final String INSTRUCTION_TYPE_VALIDATION_RANGE_REGEX = "[A-D]";
 
 
-    public boolean isValid( String message )
+    public boolean isValid( String message ) throws ValidationException
     {
         String[] messageParts = message.split( MESSAGE_SPLIT_MARKER );
-        return isInstructionTypeValid( messageParts[INSTRICTION_TYPE] );
+        boolean isValid = false;
+        
+        if(isInstructionTypeValid( messageParts[INSTRICTION_TYPE])){
+            isValid = true;
+        }
+        else{
+            isValid = false;
+            throw new ValidationException();
+        }
+        return isValid;
     }
 
 
