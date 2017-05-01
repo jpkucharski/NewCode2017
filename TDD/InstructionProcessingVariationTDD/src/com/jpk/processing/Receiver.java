@@ -25,8 +25,8 @@ public class Receiver
     public void receive( String message )
     {
         if(messageValidator.isValid(message)){
-            this.instructionMessage = new InstructionMessage();
-            instructionQueue.enqueue( message );
+            this.instructionMessage = new InstructionMessage(message);
+            instructionQueue.enqueue( instructionMessage );
         }
     }
 
