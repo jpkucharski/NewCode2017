@@ -24,8 +24,9 @@ public class Receiver
     @Override
     public void receive( String message )
     {
-        if(messageValidator.isValid(message)){
-            this.instructionMessage = new InstructionMessage(message);
+        if( messageValidator.isValid( message ) )
+        {
+            this.instructionMessage = new InstructionMessage( message );
             instructionQueue.enqueue( instructionMessage );
         }
     }
