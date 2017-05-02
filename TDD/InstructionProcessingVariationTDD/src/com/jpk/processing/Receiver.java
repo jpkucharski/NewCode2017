@@ -26,11 +26,9 @@ public class Receiver
     @Override
     public void receive( String message ) throws ValidationException
     {
-        if( messageValidator.isValid( message ) )
-        {
+            messageValidator.isValid( message );
             this.instructionMessage = new InstructionMessage( message );
             instructionQueue.enqueue( instructionMessage );
-        }
     }
 
 

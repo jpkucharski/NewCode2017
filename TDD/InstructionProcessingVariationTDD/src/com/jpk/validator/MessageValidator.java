@@ -9,19 +9,12 @@ public class MessageValidator
     private static final String INSTRUCTION_TYPE_VALIDATION_RANGE_REGEX = "[A-D]";
 
 
-    public boolean isValid( String message ) throws ValidationException
+    public void isValid( String message ) throws ValidationException
     {
         String[] messageParts = message.split( MESSAGE_SPLIT_MARKER );
-        boolean isValid = false;
-        
-        if(isInstructionTypeValid( messageParts[INSTRICTION_TYPE])){
-            isValid = true;
-        }
-        else{
-            isValid = false;
+        if(!isInstructionTypeValid( messageParts[INSTRICTION_TYPE])){
             throw new ValidationException();
         }
-        return isValid;
     }
 
 
