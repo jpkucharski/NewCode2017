@@ -1,5 +1,7 @@
 package com.jpk.processing;
 
+import java.util.Comparator;
+
 import com.jpk.entitys.InstructionMessage;
 import com.jpk.interfaces.MessageReceiver;
 import com.jpk.validator.MessageValidator;
@@ -14,10 +16,12 @@ public class Receiver
     private InstructionQueue instructionQueue;
     private InstructionMessage instructionMessage;
     private MessageValidator messageValidator;
+    private Comparator<InstructionMessage> instructionMessageComparator;
 
 
     public Receiver( InstructionQueue instructionQueue )
     {
+        this.instructionMessageComparator = new InstructionMessageComparator();
         this.messageValidator = new MessageValidator();
         this.instructionQueue = instructionQueue;
     }
@@ -47,6 +51,12 @@ public class Receiver
     public MessageValidator getMessageValidator()
     {
         return messageValidator;
+    }
+
+
+    public Comparator<InstructionMessage> getInstructionMessageComparator()
+    {
+        return instructionMessageComparator;
     }
 
 }
