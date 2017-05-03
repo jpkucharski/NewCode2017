@@ -1,5 +1,6 @@
 package com.jpk.processing;
 
+import java.util.Comparator;
 import java.util.PriorityQueue;
 
 import com.jpk.entitys.InstructionMessage;
@@ -9,13 +10,12 @@ public class InstructionQueue
 {
 
     private PriorityQueue<InstructionMessage> priorityQueue;
-
+    private Comparator<InstructionMessage> instructionMessageComparator;
 
     public InstructionQueue()
     {
-
-        this.priorityQueue = new PriorityQueue<InstructionMessage>();
-
+        this.instructionMessageComparator = new InstructionMessageComparator();
+        this.priorityQueue = new PriorityQueue<InstructionMessage>(instructionMessageComparator);
     }
 
 
@@ -48,4 +48,8 @@ public class InstructionQueue
         return priorityQueue;
     }
 
+    public Comparator<InstructionMessage> getInstructionMessageComparator()
+    {
+        return instructionMessageComparator;
+    }
 }

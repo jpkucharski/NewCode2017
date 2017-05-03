@@ -128,14 +128,9 @@ public class ReceicerTest
     @Test
     public void testingReceiveMethodSendingValidMessage_ShouldReturnComparatorObject() throws ValidationException{
         sendSimpleMessage( EXAMPLE_OF_MESSAGE );
-        assertNotNull( reciver.getInstructionMessageComparator() );
-        
-        
+        assertNotNull( reciver.getInstructionQueue().getInstructionMessageComparator() );
     }
     
-    
-    
-
 
     private void sendSimpleMessage( String message ) throws ValidationException
     {
