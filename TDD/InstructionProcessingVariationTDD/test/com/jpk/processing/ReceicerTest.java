@@ -17,25 +17,27 @@ public class ReceicerTest
     private Receiver reciver;
     private InstructionMessage simpleInstructionMessageObject;
 
-    private static final String EXAMPLE_OF_MESSAGE = "A MZ89 5678 50 20150305T10:04:56.012Z";
+    private static final String EXAMPLE_OF_MESSAGE_TYPE_A = "A MZ89 5678 50 20150305T10:04:56.012Z";
+    private static final String EXAMPLE_OF_MESSAGE_TYPE_B = "B MZ89 5678 50 20150305T10:04:56.012Z";
     private static final String EXAMPLE_OF_INVALID_MESSAGE = "E MZ89 5678 50 20150305T10:04:56.012Z";
     private static final int LENGTH_OF_QUEUE_WITH_ONE_MESSAGE = 1;
     private static final int LENGTH_OF_EMPTY_QUEUE = 0;
     private static final String VALUE_OF_ENUM_A = "1";
+    private static final int POSITION_OF_FIRST_CHARACTER_IN_MESSAGE = 0;
 
 
     @Before
     public void setUp()
     {
         reciver = new Receiver( new InstructionQueue() );
-        simpleInstructionMessageObject = new InstructionMessage( EXAMPLE_OF_MESSAGE );
+        simpleInstructionMessageObject = new InstructionMessage( EXAMPLE_OF_MESSAGE_TYPE_A );
     }
 
 
     @Test
     public void testingSendingMessageToReceiver_ShouldCreateInstructionQueue() throws ValidationException
     {
-        sendSimpleMessage( EXAMPLE_OF_MESSAGE );
+        sendSimpleMessage( EXAMPLE_OF_MESSAGE_TYPE_A );
         assertNotNull( reciver.getInstructionQueue() );
     }
 
@@ -43,7 +45,7 @@ public class ReceicerTest
     @Test
     public void testingMethodReceiveSendingMessage_ShouldReturnNewPriorityQueueObject() throws ValidationException
     {
-        sendSimpleMessage( EXAMPLE_OF_MESSAGE );
+        sendSimpleMessage( EXAMPLE_OF_MESSAGE_TYPE_A );
         assertNotNull( reciver.getInstructionQueue().getPriorityQueue() );
     }
 
@@ -51,24 +53,24 @@ public class ReceicerTest
     @Test
     public void testingReceiveMethodSendingMessage_ShouldAddMessageIntoPriorityQueue() throws ValidationException
     {
-        sendSimpleMessage( EXAMPLE_OF_MESSAGE );
-        assertEquals( EXAMPLE_OF_MESSAGE, reciver.getInstructionQueue().getPriorityQueue().peek().getMessage() );
+        sendSimpleMessage( EXAMPLE_OF_MESSAGE_TYPE_A );
+        assertEquals( EXAMPLE_OF_MESSAGE_TYPE_A, reciver.getInstructionQueue().getPriorityQueue().peek().getMessage() );
     }
 
 
     @Test
     public void testingReceiveMethodSendingMessage_ShouldReceiveMessageFromPriorityQueue() throws ValidationException
     {
-        sendSimpleMessage( EXAMPLE_OF_MESSAGE );
-        assertEquals( EXAMPLE_OF_MESSAGE, reciver.getInstructionQueue().dequeue().getMessage() );
+        sendSimpleMessage( EXAMPLE_OF_MESSAGE_TYPE_A );
+        assertEquals( EXAMPLE_OF_MESSAGE_TYPE_A, reciver.getInstructionQueue().dequeue().getMessage() );
     }
 
 
     @Test
     public void testingReceiveMethodSendingMessage_ShouldReturnMessageFromQueueWithoutRemovingItFromQueue() throws ValidationException
     {
-        sendSimpleMessage( EXAMPLE_OF_MESSAGE );
-        assertEquals( EXAMPLE_OF_MESSAGE, reciver.getInstructionQueue().peek().getMessage() );
+        sendSimpleMessage( EXAMPLE_OF_MESSAGE_TYPE_A );
+        assertEquals( EXAMPLE_OF_MESSAGE_TYPE_A, reciver.getInstructionQueue().peek().getMessage() );
         assertEquals( LENGTH_OF_QUEUE_WITH_ONE_MESSAGE, reciver.getInstructionQueue().getPriorityQueue().size() );
     }
 
@@ -76,7 +78,7 @@ public class ReceicerTest
     @Test
     public void testingReceiveMethodSendingMessage_ShouldReturnSizeOfPriorityQueueEquals1() throws ValidationException
     {
-        sendSimpleMessage( EXAMPLE_OF_MESSAGE );
+        sendSimpleMessage( EXAMPLE_OF_MESSAGE_TYPE_A );
         assertEquals( LENGTH_OF_QUEUE_WITH_ONE_MESSAGE, reciver.getInstructionQueue().count() );
     }
 
@@ -84,7 +86,7 @@ public class ReceicerTest
     @Test
     public void testingReceiveMethodSendingMessage_ShouldCreatedInstructionMessageObjectFromTheMessageString() throws ValidationException
     {
-        sendSimpleMessage( EXAMPLE_OF_MESSAGE );
+        sendSimpleMessage( EXAMPLE_OF_MESSAGE_TYPE_A );
         assertNotNull( reciver.getInstructionMessage() );
     }
 
@@ -92,7 +94,7 @@ public class ReceicerTest
     @Test
     public void testingReceiveMethodSendingMessage_ShouldCreatedMessageValidatorObject() throws ValidationException
     {
-        sendSimpleMessage( EXAMPLE_OF_MESSAGE );
+        sendSimpleMessage( EXAMPLE_OF_MESSAGE_TYPE_A );
         assertNotNull( reciver.getMessageValidator() );
     }
 
@@ -100,7 +102,7 @@ public class ReceicerTest
     @Test
     public void testingReceiveMethodSendingMessageWithTrueValidator_ShouldReturnQueueWithOneMessage() throws ValidationException
     {
-        sendSimpleMessage( EXAMPLE_OF_MESSAGE );
+        sendSimpleMessage( EXAMPLE_OF_MESSAGE_TYPE_A );
         assertEquals( LENGTH_OF_QUEUE_WITH_ONE_MESSAGE, reciver.getInstructionQueue().count() );
     }
 
@@ -108,7 +110,7 @@ public class ReceicerTest
     @Test
     public void testingReceiveMethodSendingMessageWithTrueValidator_ShouldCreateInstructionMessageObject() throws ValidationException
     {
-        sendSimpleMessage( EXAMPLE_OF_MESSAGE );
+        sendSimpleMessage( EXAMPLE_OF_MESSAGE_TYPE_A );
         assertEquals( simpleInstructionMessageObject.getClass(), reciver.getInstructionQueue().peek().getClass() );
     }
 
@@ -132,7 +134,7 @@ public class ReceicerTest
     @Test
     public void testingReceiveMethodSendingValidMessage_ShouldReturnComparatorObject() throws ValidationException
     {
-        sendSimpleMessage( EXAMPLE_OF_MESSAGE );
+        sendSimpleMessage( EXAMPLE_OF_MESSAGE_TYPE_A );
         assertNotNull( reciver.getInstructionQueue().getInstructionMessageComparator() );
     }
 
@@ -140,12 +142,22 @@ public class ReceicerTest
     @Test
     public void testingReceiveMethodSendingValidMessage_ShouldReturnEnumValueOf1InString() throws ValidationException
     {
-        sendSimpleMessage( EXAMPLE_OF_MESSAGE );
+        sendSimpleMessage( EXAMPLE_OF_MESSAGE_TYPE_A );
         assertEquals(
             VALUE_OF_ENUM_A,
             Integer.toString(
                 MessagePriorityEnum
-                    .valueOf( String.valueOf( reciver.getInstructionQueue().peek().getMessage().charAt( 0 ) ) ).getPriorityValue() ) );
+                    .valueOf( String.valueOf( reciver.getInstructionQueue().peek().getMessage().charAt( POSITION_OF_FIRST_CHARACTER_IN_MESSAGE ) ) )
+                    .getPriorityValue() ) );
+    }
+
+
+    @Test
+    public void testingReceiveMethodSendingTwoValidMessagesBAndAUsingComparator_ShouldReturnMessageA() throws ValidationException
+    {
+        sendSimpleMessage( EXAMPLE_OF_MESSAGE_TYPE_B );
+        sendSimpleMessage( EXAMPLE_OF_MESSAGE_TYPE_A );
+        assertEquals( EXAMPLE_OF_MESSAGE_TYPE_A, reciver.getInstructionQueue().peek().getMessage() );
     }
 
 

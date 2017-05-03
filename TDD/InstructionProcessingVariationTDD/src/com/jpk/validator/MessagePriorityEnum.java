@@ -3,7 +3,7 @@ package com.jpk.validator;
 public enum MessagePriorityEnum
 {
     
-    A( 1 );
+    A( 1 ), B( 2 );
     
     private int priorityValue;
     
