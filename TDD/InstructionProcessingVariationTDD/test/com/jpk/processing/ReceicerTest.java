@@ -19,10 +19,15 @@ public class ReceicerTest
 
     private static final String EXAMPLE_OF_MESSAGE_TYPE_A = "A MZ89 5678 50 20150305T10:04:56.012Z";
     private static final String EXAMPLE_OF_MESSAGE_TYPE_B = "B MZ89 5678 50 20150305T10:04:56.012Z";
+    private static final String EXAMPLE_OF_MESSAGE_TYPE_C = "C MZ89 5678 50 20150305T10:04:56.012Z";
+    private static final String EXAMPLE_OF_MESSAGE_TYPE_D = "D MZ89 5678 50 20150305T10:04:56.012Z";
     private static final String EXAMPLE_OF_INVALID_MESSAGE = "E MZ89 5678 50 20150305T10:04:56.012Z";
     private static final int LENGTH_OF_QUEUE_WITH_ONE_MESSAGE = 1;
     private static final int LENGTH_OF_EMPTY_QUEUE = 0;
     private static final String VALUE_OF_ENUM_A = "1";
+    private static final String VALUE_OF_ENUM_B = "2";
+    private static final String VALUE_OF_ENUM_C = "3";
+    private static final String VALUE_OF_ENUM_D = "3";
     private static final int POSITION_OF_FIRST_CHARACTER_IN_MESSAGE = 0;
 
 
@@ -143,12 +148,13 @@ public class ReceicerTest
     public void testingReceiveMethodSendingValidMessage_ShouldReturnEnumValueOf1InString() throws ValidationException
     {
         sendSimpleMessage( EXAMPLE_OF_MESSAGE_TYPE_A );
-        assertEquals(
-            VALUE_OF_ENUM_A,
-            Integer.toString(
-                MessagePriorityEnum
-                    .valueOf( String.valueOf( reciver.getInstructionQueue().peek().getMessage().charAt( POSITION_OF_FIRST_CHARACTER_IN_MESSAGE ) ) )
-                    .getPriorityValue() ) );
+        sendSimpleMessage( EXAMPLE_OF_MESSAGE_TYPE_B );
+        sendSimpleMessage( EXAMPLE_OF_MESSAGE_TYPE_C );
+        sendSimpleMessage( EXAMPLE_OF_MESSAGE_TYPE_D );
+        assertEquals( VALUE_OF_ENUM_A, getFirstLetherOfTheInstructuonMessageFromTheQueue() );
+        assertEquals( VALUE_OF_ENUM_B, getFirstLetherOfTheInstructuonMessageFromTheQueue() );
+        assertEquals( VALUE_OF_ENUM_C, getFirstLetherOfTheInstructuonMessageFromTheQueue() );
+        assertEquals( VALUE_OF_ENUM_D, getFirstLetherOfTheInstructuonMessageFromTheQueue() );
     }
 
 
@@ -161,9 +167,29 @@ public class ReceicerTest
     }
 
 
+    @Test
+    public void testingReceiveMethodSendingTwoValidMessagesCAndBUsingComparator_ShouldReturnMessageB() throws ValidationException
+    {
+        sendSimpleMessage( EXAMPLE_OF_MESSAGE_TYPE_C );
+        sendSimpleMessage( EXAMPLE_OF_MESSAGE_TYPE_B );
+        assertEquals( EXAMPLE_OF_MESSAGE_TYPE_B, reciver.getInstructionQueue().peek().getMessage() );
+    }
+
+
     private void sendSimpleMessage( String message ) throws ValidationException
     {
         reciver.receive( message );
+    }
+
+
+    private String getFirstLetherOfTheInstructuonMessageFromTheQueue()
+    {
+        return Integer.toString(
+            MessagePriorityEnum
+                .valueOf(
+                    String
+                        .valueOf( reciver.getInstructionQueue().dequeue().getMessage().charAt( POSITION_OF_FIRST_CHARACTER_IN_MESSAGE ) ) )
+                .getPriorityValue() );
     }
 
 }
