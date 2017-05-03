@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.jpk.entitys.InstructionMessage;
+import com.jpk.validator.MessagePriorityEnum;
 
 import comjpk.exceptions.ValidationException;
 
@@ -20,6 +21,7 @@ public class ReceicerTest
     private static final String EXAMPLE_OF_INVALID_MESSAGE = "E MZ89 5678 50 20150305T10:04:56.012Z";
     private static final int LENGTH_OF_QUEUE_WITH_ONE_MESSAGE = 1;
     private static final int LENGTH_OF_EMPTY_QUEUE = 0;
+    private static final String VALUE_OF_ENUM_A = "1";
 
 
     @Before
@@ -112,7 +114,8 @@ public class ReceicerTest
 
 
     @Test( expected = ValidationException.class )
-    public void testingReceiveMethodSendingInvalidMessage_ShouldValidateFirstSymbolOfMessageInstructionTypeAndNotAddItToTheQueue() throws ValidationException
+    public void testingReceiveMethodSendingInvalidMessage_ShouldValidateFirstSymbolOfMessageInstructionTypeAndNotAddItToTheQueue()
+        throws ValidationException
     {
         sendSimpleMessage( EXAMPLE_OF_INVALID_MESSAGE );
         assertEquals( LENGTH_OF_EMPTY_QUEUE, reciver.getInstructionQueue().count() );
@@ -124,13 +127,27 @@ public class ReceicerTest
     {
         sendSimpleMessage( EXAMPLE_OF_INVALID_MESSAGE );
     }
-    
+
+
     @Test
-    public void testingReceiveMethodSendingValidMessage_ShouldReturnComparatorObject() throws ValidationException{
+    public void testingReceiveMethodSendingValidMessage_ShouldReturnComparatorObject() throws ValidationException
+    {
         sendSimpleMessage( EXAMPLE_OF_MESSAGE );
         assertNotNull( reciver.getInstructionQueue().getInstructionMessageComparator() );
     }
-    
+
+
+    @Test
+    public void testingReceiveMethodSendingValidMessage_ShouldReturnEnumValueOf1InString() throws ValidationException
+    {
+        sendSimpleMessage( EXAMPLE_OF_MESSAGE );
+        assertEquals(
+            VALUE_OF_ENUM_A,
+            Integer.toString(
+                MessagePriorityEnum
+                    .valueOf( String.valueOf( reciver.getInstructionQueue().peek().getMessage().charAt( 0 ) ) ).getPriorityValue() ) );
+    }
+
 
     private void sendSimpleMessage( String message ) throws ValidationException
     {
